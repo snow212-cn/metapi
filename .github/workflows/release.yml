@@ -2,8 +2,6 @@ name: Release
 
 on:
   push:
-    branches:
-      - fix/electron-42-prebuild-abi
     tags: ['v*']
   workflow_dispatch:
 
@@ -56,9 +54,22 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - platform: linux
+            runner: ubuntu-latest
+            artifactLabel: linux-x64
           - platform: windows
             runner: windows-latest
             artifactLabel: windows-x64
+          - platform: mac-arm64
+            runner: macos-15
+            artifactLabel: mac-arm64
+            packageCommand: npm run package:desktop -- --mac --arm64
+            expectedMacArch: arm64
+          - platform: mac-x64
+            runner: macos-15-intel
+            artifactLabel: mac-x64
+            packageCommand: npm run package:desktop:mac:intel
+            expectedMacArch: x64
 
     steps:
       - name: Checkout
