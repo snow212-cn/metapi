@@ -130,7 +130,8 @@
     "minimist": "^1.2.8",
     "@electron/rebuild": {
       "node-abi": "4.37.0"
-    }
+    },
+    "node-abi": "3.89.0"
   },
   "author": {
     "name": "cita-777",
