@@ -78,15 +78,29 @@ jobs:
             Pop-Location
           }
 
-      - name: Upload Windows desktop artifacts
+      - name: Upload Windows installer (EXE)
         uses: actions/upload-artifact@v7
         with:
-          name: metapi-windows-desktop-${{ github.run_id }}
+          name: metapi-windows-installer-${{ github.run_id }}
+          path: release/*-win-x64.exe
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload Windows portable package (ZIP)
+        uses: actions/upload-artifact@v7
+        with:
+          name: metapi-windows-portable-${{ github.run_id }}
+          path: release/*-win-x64.zip
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload Windows update metadata
+        uses: actions/upload-artifact@v7
+        with:
+          name: metapi-windows-update-metadata-${{ github.run_id }}
           path: |
-            release/*.exe
-            release/*.zip
             release/*.blockmap
             release/latest*.yml
             release/builder-debug.yml
-          if-no-files-found: error
+          if-no-files-found: ignore
           retention-days: 30
